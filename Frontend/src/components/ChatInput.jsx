@@ -96,7 +96,7 @@ export const ChatInput = ({ onSend, disabled }) => {
           ref={textareaRef}
           className="input-textarea"
           rows={1}
-          placeholder="Message Nexus AI... (Enter to send, Shift+Enter for line break)"
+          placeholder="Message AIDVOCATE... (Enter to send, Shift+Enter for line break)"
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -133,7 +133,7 @@ export const ChatInput = ({ onSend, disabled }) => {
         </div>
       </div>
       <div className="input-disclaimer">
-        Nexus AI can make mistakes. Verify important information.
+        AIDVOCATE can make mistakes. Verify important information.
       </div>
     </div>
   );

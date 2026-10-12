@@ -20,25 +20,21 @@ export const ChatWindow = ({
     {
       title: 'Supreme Court Verdicts',
       desc: 'Query case decisions and judgment summaries.',
-      icon: <PenTool size={16} color="var(--accent-primary)" />,
       prompt: 'What is the Supreme Court verdict in 2025_1_40_61_EN.pdf?',
     },
     {
       title: 'Section 482 CrPC Powers',
       desc: 'Explore High Court discretionary jurisdiction rules.',
-      icon: <Code size={16} color="var(--accent-emerald)" />,
       prompt: 'Explain the High Court discretionary powers under Section 482 CrPC.',
     },
     {
       title: 'Quashing Proceedings',
       desc: 'Understand legal grounds for quashing criminal complaints.',
-      icon: <BarChart3 size={16} color="#8b5cf6" />,
       prompt: 'Under what circumstances can a criminal complaint be restored or quashed?',
     },
     {
       title: 'Negotiable Instruments Act',
       desc: 'Check precedents regarding power of attorney holders.',
-      icon: <Lightbulb size={16} color="#f59e0b" />,
       prompt: 'Summarize Supreme Court rulings regarding Power of Attorney holders in legal cases.',
     },
   ];
@@ -50,7 +46,7 @@ export const ChatWindow = ({
         {messages.length === 0 ? (
           <div className="welcome-screen">
             <div className="welcome-icon-box">
-              <Sparkles size={26} />
+              {/* <Sparkles size={26} /> */}
             </div>
             <div className="welcome-title">How can I help you today?</div>
             <div className="welcome-subtitle">
@@ -65,7 +61,6 @@ export const ChatWindow = ({
                   onClick={() => onSendPrompt(card.prompt)}
                 >
                   <div className="suggestion-title">
-                    {card.icon}
                     <span>{card.title}</span>
                   </div>
                   <div className="suggestion-desc">{card.desc}</div>

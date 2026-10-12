@@ -1,15 +1,26 @@
 import os
+from pathlib import Path
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_qdrant import QdrantVectorStore
 
-app = FastAPI(title="RAG Backend API")
+# Load environment variables (check OpenAI/.env, RAG/.env, or parent)
+env_local = Path(__file__).resolve().parent / ".env"
+env_rag = Path(__file__).resolve().parent.parent / "RAG" / ".env"
+if env_local.exists():
+    load_dotenv(dotenv_path=env_local)
+elif env_rag.exists():
+    load_dotenv(dotenv_path=env_rag)
+else:
+    load_dotenv()
 
-# Enable CORS so Frontend can talk to Backend
+app = FastAPI(title="RAG Backend API (OpenAI)")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -18,22 +29,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize Ollama LLM and Embeddings
-llm_client = ChatOllama(
-    model="qwen3:8b",
+openai_api_key = os.getenv("OPENAI_API_KEY")
+if not openai_api_key:
+    print("WARNING: OPENAI_API_KEY not found in environment or .env file.")
+
+model_name = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+
+llm_client = ChatOpenAI(
+    model=model_name,
     temperature=0,
-    base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+    api_key=openai_api_key
 )
 
+# Current embeddings matching the existing Qdrant collection
 embedding_model = HuggingFaceEmbeddings(
-    model_name="all-MiniLM-L6-v2"
+    model_name=os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
 )
 
-# Lazy/Global Vector DB connection
 def get_vector_db():
     return QdrantVectorStore.from_existing_collection(
         url=os.getenv("QDRANT_URL", "http://localhost:6333"),
-        collection_name="learning_rag",
+        collection_name=os.getenv("COLLECTION_NAME", "learning_rag"),
         embedding=embedding_model,
     )
 
@@ -42,7 +58,10 @@ class QueryRequest(BaseModel):
 
 @app.get("/")
 def root():
-    return {"message": "RAG Backend Server is running"}
+    return {
+        "message": "RAG Backend Server (OpenAI) is running",
+        "model": model_name
+    }
 
 @app.post("/chat")
 @app.post("/api/chat")
@@ -78,7 +97,8 @@ File Location: {result.metadata.get('source', 'N/A')}
     SYSTEM_PROMPT = f"""
 You are a helpful AI Assistant who answers user queries
 based on the available context retrieved from a PDF file
-about legal cases and Supreme Court verdicts.
+about legal cases and Supreme Court verdicts. If the context is not available,
+use your own knowledge to answer the quesstion but THE QUESTION SHOULD BE RELATED TO LAW/LEGAL CASES ONLY.
 
 Your task is to provide correct information based on the
 retrieved context.
@@ -111,8 +131,10 @@ Context:
             "sources": sources
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Ollama execution failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"OpenAI execution failed: {str(e)}")
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("RAG.app:app", host="0.0.0.0", port=8000, reload=True)
+    # Support running directly from MP or OpenAI folder
+    app_import = "app:app" if os.path.basename(os.getcwd()) == "OpenAI" else "OpenAI.app:app"
+    uvicorn.run(app_import, host="0.0.0.0", port=8000, reload=True)

@@ -48,10 +48,7 @@ export const Sidebar = ({
     <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-header">
         <div className="logo-box">
-          <div className="logo-icon">
-            <Sparkles size={18} />
-          </div>
-          <span>Nexus AI</span>
+          <span>AIDVOCATE</span>
         </div>
         {onCloseMobile && (
           <button className="mobile-toggle" onClick={onCloseMobile} aria-label="Close menu">

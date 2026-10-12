@@ -6,42 +6,42 @@
   --bg-surface: #f1f5f9;
   --bg-card: #ffffff;
   --bg-hover: #f1f5f9;
-  
+
   --border-subtle: #e2e8f0;
   --border-medium: #cbd5e1;
   --border-focus: #2563eb;
-  
+
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --text-muted: #94a3b8;
-  
+
   --accent-primary: #2563eb;
   --accent-hover: #1d4ed8;
   --accent-light: #eff6ff;
   --accent-emerald: #10b981;
   --accent-danger: #ef4444;
-  
+
   --user-msg-bg: #2563eb;
   --user-msg-text: #ffffff;
   --ai-msg-bg: #f8fafc;
   --ai-msg-border: #e2e8f0;
-  
+
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
-  
+
   --sidebar-width: 260px;
   --header-height: 56px;
   --content-max-width: 800px;
-  
+
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-pill: 9999px;
-  
+
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  
+
   --transition-fast: 0.15s ease;
   --transition-normal: 0.25s ease;
 }
@@ -52,38 +52,42 @@
   --bg-surface: #334155;
   --bg-card: #1e293b;
   --bg-hover: #334155;
-  
+
   --border-subtle: #334155;
   --border-medium: #475569;
   --border-focus: #3b82f6;
-  
+
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #64748b;
-  
+
   --accent-primary: #3b82f6;
   --accent-hover: #60a5fa;
   --accent-light: rgba(59, 130, 246, 0.15);
   --accent-emerald: #34d399;
   --accent-danger: #f87171;
-  
+
   --user-msg-bg: #3b82f6;
   --user-msg-text: #ffffff;
   --ai-msg-bg: #1e293b;
   --ai-msg-border: #334155;
-  
+
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -98,13 +102,16 @@ html, body, #root {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border-medium);
   border-radius: 999px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
@@ -536,8 +543,15 @@ html, body, #root {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .message-wrapper.user {
@@ -627,21 +641,33 @@ html, body, #root {
 .markdown-body p {
   margin-bottom: 10px;
 }
+
 .markdown-body p:last-child {
   margin-bottom: 0;
 }
 
-.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 {
   margin: 14px 0 8px 0;
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.markdown-body h1 { font-size: 18px; }
-.markdown-body h2 { font-size: 16px; }
-.markdown-body h3 { font-size: 15px; }
+.markdown-body h1 {
+  font-size: 18px;
+}
 
-.markdown-body ul, .markdown-body ol {
+.markdown-body h2 {
+  font-size: 16px;
+}
+
+.markdown-body h3 {
+  font-size: 15px;
+}
+
+.markdown-body ul,
+.markdown-body ol {
   margin: 8px 0 10px 20px;
 }
 
@@ -876,8 +902,15 @@ html, body, #root {
 }
 
 @keyframes pulseMic {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 .send-btn {
@@ -985,21 +1018,27 @@ html, body, #root {
     transform: translateX(-100%);
     box-shadow: var(--shadow-lg);
   }
+
   .sidebar.open {
     transform: translateX(0);
   }
+
   .mobile-toggle {
     display: flex;
   }
+
   .prompt-suggestions {
     grid-template-columns: 1fr;
   }
+
   .message-bubble-content {
     max-width: 92%;
   }
+
   .messages-container {
     padding: 16px 12px;
   }
+
   .input-container {
     padding: 10px 12px 14px 12px;
   }
